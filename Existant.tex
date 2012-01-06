@@ -1,0 +1,55 @@
+\section{Etat de l'art de la virtualisation de postes de travail}
+
+\subsection{Théorie}
+
+\subsection{Virtualisation ?}
+
+\subsection{Hyperviseur ?}
+
+\subsubsection{Hyperviseur "Bare Metal"}
+
+\subsubsection{Hyperviseur "Hosted"}
+
+
+\subsection{Déploiement au sein d'une architecture réseau}
+
+\subsubsection{Serveurs}
+
+\subsubsection{Postes de travail physiques}
+
+\subsubsection{Politique de gestion utilisateurs}
+
+\subsection{Solutions existantes}
+
+\subsubsection{Citrix XenServer}
+
+\subsubsection{Solution VMWare}
+
+L'éditeur logiciel VMWare propose une solution répondant à nos besoins. La solution intégrée proposée couvre la totalité des besoins générés par l'adoption de ce type de technologie. La couverture de tout les logiciels d'exploitation par l'éditeur permet d'exploiter de nombreuses synergies entre ces différents composants, par exemple par la mise en place de protocoles propriétaires optimisés... Nous allons passer en revue les points clés de notre besoin.\\
+
+\paragraph{Hébergement centralisé de machines virtuelles}
+
+\textbf{VMWare ESXi} est un hyperviseur de type bare-metal, reconnu comme l'un des meilleurs du marché actuellement. L'avantage de ce type de solution à OS ultra léger est double, d'une part l'optimisation du fonctionnement de l'hyperviseur exploitant au maximum les ressources du serveur, d'autre part une plus grande sécurité sur cette plateforme.
+
+\paragraph{Équilibrage de charge sur les différents serveurs}
+
+\textbf{VMWare vCenter Server} offre une solution de supervision de l'activité du parc de VM en permettant d'allouer dynamiquement les VM en activité sur le parc de serveur, ainsi nous sommes surs de tirer parti au maximum des ressources d'exécution des serveurs, et ce sans interruption de service pour l'utilisateur. Nous envisageons cette solution pour les machines dites "partagées" uniquement, par exemple les serveurs de TP entre autres...
+
+\paragraph{Client d'accès dédié}
+Le client VMWare View fourni un moyen flexible d'exploiter les différentes machines virtuelles du système.\\
+Tout d'abord, il est multiplateforme, (Windows, Linux, MacOS, Android, autres...) et cela se révèle extrêmement intéressant en terme de limitation de coûts, car il serait alors envisageable de migrer la totalité du parc de machines physiques  sur un système libre, l'utilisateur final étant parfaitement libre de choisir son OS sur sa VM.\\ 
+Pour continuer, il est possible de rapatrier et d'exécuter sur la machine hébergeant le client les machines virtuelles, permettant d'exploiter le parc de machines physiques présentes localement. Cela peut s'avérer extrêmement intéressant la encore, pour exploiter l'existant technique (ie le parc de machines) sans avoir besoin de renouveler les serveurs... Car exécuter de façon distante les VM impliquerais un renouvellement du parc de serveurs.\\
+
+\paragraph{Administration facilitée du parc de VM}
+\textbf{VMWare View Composer} Cette solution permet de générer un pool de machines virtuelles "filles" héritant d'une seule et même machine mère. Ainsi le déploiement et l'administration pour par exemple une plateforme de TP est grandement simplifiée. D'autant plus que les coûts de stockages sont réduits à environ 60\% d'après les dires du constructeur.\\
+De plus, une plateforme web...%TODO
+
+\paragraph{Gestion des accès utilisateurs}
+
+
+\subsubsection{Solution Microsoft Hyper-V}
+
+\subsubsection{Proxmox \& solutions Open-Source}
+
+
+\subsection{Evaluation des solutions et choix}
