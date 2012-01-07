@@ -6,12 +6,12 @@ TEXFILE=Existant.tex
 all: $(TARGET)
 
 clean: cleantmp
-rm -f $(TARGET) *.toc *.ind *.dvi
+	rm -f $(TARGET) *.toc *.ind *.dvi
 
 cleantmp:
-rm -f *.log *.out *.aux *.ilg
+	rm -f *.log *.out *.aux *.ilg
 
 $(TARGET): $(TEXFILE) $(INCLUDES) $(ASSETS)
 #Once for toc, hyper-refs, etc, and once for good
-pdflatex $(TEXFILE)
-pdflatex $(TEXFILE)
+	pdflatex $(TEXFILE)
+	pdflatex $(TEXFILE)
