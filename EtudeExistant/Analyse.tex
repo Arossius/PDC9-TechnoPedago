@@ -29,16 +29,21 @@ Le principe de fonctionnement est relativement simple : \\
 
 A première vue, l'introduction d'une couche intermédiaire entre l'OS et le matériel peut être vue comme une source de complexité supplémentaire et donc un overhead certain. Cela est de moins en moins vrai compte tenu des différentes technologies d'hyperviseurs, l'intégration et l'optimisation de ces derniers allant jusqu'à la microprogramation des processeurs actuels.\\
 Passé ce léger défaut, cela contribue à la mutualisation des ressources d'exécution et facilite l'équilibrage de charge. Par exemple, la mutualisation de quatre serveurs sur une seule machine physique peut se révéler intéressante en terme de coût et de consommation énergétique.\\
-De plus, l'aspect dématérialise de ce type de machine permet de rendre beaucoup plus facile l'administration et la manipulation de ces dernières.\\
+De plus, l'aspect dématérialise de ce type de machine permet de rendre beaucoup plus facile l'administration et la manipulation de ces dernières.
 
 \subsection{Hyperviseur ?}
 
-Comme énoncé un peu plus haut, un hyperviseur est un logiciel d'exécution de machines virtuelles. L'objectif de ce logiciel est dans un premier temps de créer une couche d'abstraction matérielle entre lui et l'OS hébergé, et ensuite de gérer les ressources de la machine hôte en les allouant aux différentes machines virtuelles qu'il exécute.
+Comme énoncé un peu plus haut, un hyperviseur est un logiciel d'exécution de machines virtuelles. L'objectif de ce logiciel est dans un premier temps de créer une couche d'abstraction matérielle entre lui et l'OS hébergé, et ensuite de gérer les ressources de la machine hôte en les allouant aux différentes machines virtuelles qu'il exécute en fonction du besoin.\\
+D'autre fonctionnalités sont alloués, comme la gestion de l'accès aux ressources physique de la machine hôte, ou encore les backups des différentes machines virtuelles exécutées.\\
+On distingues deux catégories d'hypervieurs :\\
 
 \subsubsection{Hyperviseur "Bare Metal"}
 
+Ces hyperviseurs intégrent le système d'exploitation de l'hote. Ce sont généralement des systèmes ultra-légers et optimisés de façon. Ainsi, les pertes de performances sont limités, l'hyperviseur Bare Metal limitant grandement l'overhead nécessaire à l'exploitation de la machine. Cependant, la machine exécutant cet OS est donc dédiée aux tâches de virtualisation.
+
 \subsubsection{Hyperviseur "Hosted"}
 
+A l'inverse, l'hyperviseur est ici exécuté dans l'user space d'un OS standard. Les performances dédiées aux VM sont donc moins importantes, mais la machine hôte n'est pas dédiée à la virtualisation, ce qui est très pratique pour faire cohabiter des systèmes d'exploitation sur un ordinateur, et plus accessible qu'une solution de dual-boot standard.
 
 \subsection{Déploiement au sein d'une architecture réseau}
 
