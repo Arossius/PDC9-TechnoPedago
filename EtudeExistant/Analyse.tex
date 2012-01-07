@@ -4,7 +4,36 @@
 
 \subsection{Virtualisation ?}
 
+\subsubsection{Qu'est ce que c'est ?}
+
+Virtualiser une machine, reviens à exécuter un ou plusieurs systèmes d'exploitation dans un contexte dit virtuel. Ce qui signifie que l'OS n'a pas la main directement sur le matériel, mais via une couche d'abstraction intermédiaire.\\ 
+
+Le principe de fonctionnement est relativement simple : \\
+\begin{itemize}
+\item  Une machine hote, fonctionnant à l'aide de n'importe quel système d'exploitation héberge un logiciel de virtualisation .
+\item Ce logiciel de virtualisaiton manipule des images de machines virtuelles, et les exécutes dans un contexte virtuel différent, simplifiant la cohabitation entre les différents systèmes d'exploitation.
+\item Ces machines possèdent les mêmes caractéristiques qu'une machine physique, des ressources de la machines hôte lui sont attribuées (ie, une quantité de mémoire fixe,  des coeurs du processeur...)
+\item Via le logiciel de virtualisation, les machines exécutées peuvent accéder aux ressources de la machine physique, par exemple une imprimante raccordée en usb... etc...
+\item Il est alors possible de manipuler facilement une machine virtuelle via son image, elle devient exécutable sur n'importe quel poste exécutant un logiciel de virtualisation. De plus, les opérations de clonage, de sauvegarde / restauration deviennent extrêmement simples.
+\end{itemize}
+
+\subsubsection{Technologies}
+
+\begin{itemize}
+\item Noyau partagé \& Isolateur : Cette solution n'est pas à proprement parler de la virtualisation, car il s'agit juste d'isoler des processus de façon à pouvoir permettre leur exécution simultanée, alors qu'ils ne sont pas prévus pour fonctionner simultanément. Les performances sont bonnes, car peu d'overhead est généré à l'exécution, mais cela est réservé aux systèmes Linux uniquement, car le procédé est extrêmement dépendant du système.
+\item Noyau en User Space : Cela reviens à exécuter le noyau hébergé dans l'user space de la machine hôte, sans abstraction ni optimisation au niveau matériel. La encore réservée aux systèmes linux, cette solution se révelle peu performante et difficile à mettre en place.
+\item Émulation matérielle  : dernière solution, elle consiste à créer une couche d'émulation matérielle entre la machine hôte et la machine hébergée, afin de gérer et d'optimiser les interactions avec le matériel. Le type de logiciel utilisé pour exécuter ces machines virtuelles est appelé hyperviseur.
+\end{itemize}
+
+\subsubsection{Avantages ?}
+
+A première vue, l'introduction d'une couche intermédiaire entre l'OS et le matériel peut être vue comme une source de complexité supplémentaire et donc un overhead certain. Cela est de moins en moins vrai compte tenu des différentes technologies d'hyperviseurs, l'intégration et l'optimisation de ces derniers allant jusqu'à la microprogramation des processeurs actuels.\\
+Passé ce léger défaut, cela contribue à la mutualisation des ressources d'exécution et facilite l'équilibrage de charge. Par exemple, la mutualisation de quatre serveurs sur une seule machine physique peut se révéler intéressante en terme de coût et de consommation énergétique.\\
+De plus, l'aspect dématérialise de ce type de machine permet de rendre beaucoup plus facile l'administration et la manipulation de ces dernières.\\
+
 \subsection{Hyperviseur ?}
+
+Comme énoncé un peu plus haut, un hyperviseur est un logiciel d'exécution de machines virtuelles. L'objectif de ce logiciel est dans un premier temps de créer une couche d'abstraction matérielle entre lui et l'OS hébergé, et ensuite de gérer les ressources de la machine hôte en les allouant aux différentes machines virtuelles qu'il exécute.
 
 \subsubsection{Hyperviseur "Bare Metal"}
 
@@ -45,7 +74,7 @@ Pour continuer, il est possible de rapatrier et d'exécuter sur la machine hébe
 De plus, une plateforme web...%TODO
 
 \paragraph{Gestion des accès utilisateurs}
-
+Tout les composants de cette suite logicielle sont directement racordable à un annuaire LDAP, plus particulièrement Microsoft Active Directory, qui est actuellement utilisé pour le SI de l'école. Ainsi, nous serions en mesure de fournir une gestion fine des droits utilisateurs sur le système de machines virtuelles, par exemple au niveau de la création /administration de ces dernières, en se basant sur l'arbre de classes actuellement défini par l'annuaire de l'école.
 
 \subsubsection{Solution Microsoft Hyper-V}
 
