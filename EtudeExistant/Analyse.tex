@@ -1,7 +1,5 @@
 \section{Etat de l'art de la virtualisation de postes de travail}
 
-\subsection{Théorie}
-
 \subsection{Virtualisation ?}
 
 \subsubsection{Qu'est ce que c'est ?}
@@ -47,11 +45,47 @@ A l'inverse, l'hyperviseur est ici exécuté dans l'user space d'un OS standard.
 
 \subsection{Déploiement au sein d'une architecture réseau}
 
+Intéressons nous maintenant d'un peu plus prêt à l'architecture d'un système de virtualisation et à son implémentation dans un SI.
+
 \subsubsection{Serveurs}
+
+Afin d'exploiter un système de virtualisation globalisé à un SI, plusieurs fonctionnalités principales sont nécessaires :\\
+\begin{itemize}
+\item Exécuter des VM sur des ressources partagées
+\item Stocker et synchroniser le parc de VM
+\item Administrer le parc de VM
+\item Répartir la charge sur les différents hyperviseurs bare-metal.
+\item Administrer le parc utilisateur et gérer les droits\\
+\end{itemize} 
+
+Chacune de ces quatre fonctionalités est couverte par un serveur autonome, dans une architecuture de VM nous retrouverons donc :\\
+
+\paragraph{Grappe de serveurs d'exécution} Serveurs exécutant des hyperviseurs de type bare-metal,  ayant pour objectif de fournir une ressource matérielle dédiée à l'exécution des machines virtuelles. Ils sont administrés à distance, la charge étant répartie par un autre serveur. 
+
+\paragraph{Serveur de Stockage / Synchronisation des données} Ces serveurs sont en charge de stocker les images de machines virtuelles et de garantir le backup de ces dernières pendant leur exécution.
+
+\paragraph{Serveur d'administration} Serveur, offrant un service de pilotage et de monitoring de l'activité du service de virtualisation. En général, c'est un service web, accessible à plusieurs classes d'utilisateurs, ayant des accréditation adaptées en fonction de leurs droits.
+
+\paragraph{Serveur de répartition de charge}
+"Ordonnanceur" du système de virtualisation, il prends en charge les demandes distanciation de VM et réparti ces demandes sur les ressources d'exécution qu'il tient à sa disposition.
+
+\paragraph{Serveur d'authentification} 
+Point d'entrée au service, ce serveur se charge de vérifier l'identité des différents clients effectuant une demande de connexion au service de VM, via par exemple le raccordement à un annuaire LDAP.
 
 \subsubsection{Postes de travail physiques}
 
+Les postes de travails physiques exécutent un client qui se connecte au système de virtualisation. Il intègre tout les utilitaires nécessaires à l'accès aux ressources physique de la machine hébergeant le client, pour donner l'impression à l'utilisateur final que la VM s'exécute comme OS principal de la machine.\\
+Deux stratégies quand à l'exécution des machines virtuelles :\\
+\begin{itemize}
+\item Exécution distante (sur un hyperviseur bare-metal) et accès via un protocole de bureau à distance, type VNC ou encore protocole propriétaire PCoIP (VWare...) . Centralise l'exécution et réparti efficacement la charge.
+\item Exécution sur la machine client, utilisant alors le client comme hyperviseur dédidé. L'image de la machine est donc rapatriée depuis le serveur de stockage pour être exécutée, et backupée à intervalle régulier.
+\end{itemize}
+
+Dans notre cas, il est évident que l'utilisation du mode d'exécution local se révelle extrêmement intéressant, car il permettrait d'exploiter la totalité de la puissance de calcul des postes du département informatique.
+
 \subsubsection{Politique de gestion utilisateurs}
+
+Nous le verrons par la suite, beaucoup de services de virtualisation propose un lien étroit avec les systèmes d'annuaires LDAP.
 
 \subsection{Solutions existantes}
 
