@@ -28,17 +28,17 @@ Le principe de fonctionnement est relativement simple : \\
 
 A première vue, l'introduction d'une couche intermédiaire entre l'OS et le matériel peut être vue comme une source de complexité supplémentaire et donc un overhead certain. Cela est de moins en moins vrai compte tenu des différentes technologies d'hyperviseurs, l'intégration et l'optimisation de ces derniers allant jusqu'à la microprogramation des processeurs actuels.\\
 Passé ce léger défaut, cela contribue à la mutualisation des ressources d'exécution et facilite l'équilibrage de charge. Par exemple, la mutualisation de quatre serveurs sur une seule machine physique peut se révéler intéressante en terme de coût et de consommation énergétique.\\
-De plus, l'aspect dématérialise de ce type de machine permet de rendre beaucoup plus facile l'administration et la manipulation de ces dernières.
+De plus, l'aspect dématérialisé de ce type de machine permet de rendre beaucoup plus facile l'administration et la manipulation de ces dernières.
 
 \subsection{Hyperviseur ?}
 
 Comme énoncé un peu plus haut, un hyperviseur est un logiciel d'exécution de machines virtuelles. L'objectif de ce logiciel est dans un premier temps de créer une couche d'abstraction matérielle entre lui et l'OS hébergé, et ensuite de gérer les ressources de la machine hôte en les allouant aux différentes machines virtuelles qu'il exécute en fonction du besoin.\\
-D'autre fonctionnalités sont alloués, comme la gestion de l'accès aux ressources physique de la machine hôte, ou encore les backups des différentes machines virtuelles exécutées.\\
+D'autre fonctionnalités sont alloueés, comme la gestion de l'accès aux ressources physique de la machine hôte, ou encore les backups des différentes machines virtuelles exécutées.\\
 On distingues deux catégories d'hypervieurs :\\
 
 \subsubsection{Hyperviseur "Bare Metal"}
 
-Ces hyperviseurs intégrent le système d'exploitation de l'hote. Ce sont généralement des systèmes ultra-légers et optimisés de façon. Ainsi, les pertes de performances sont limités, l'hyperviseur Bare Metal limitant grandement l'overhead nécessaire à l'exploitation de la machine. Cependant, la machine exécutant cet OS est donc dédiée aux tâches de virtualisation.
+Ces hyperviseurs intégrent le système d'exploitation de l'hote. Ce sont généralement des systèmes ultra-légers et optimisés. Ainsi, les pertes de performances sont limitées, l'hyperviseur Bare Metal limitant grandement l'overhead nécessaire à l'exploitation de la machine. Cependant, la machine exécutant cet OS est donc dédiée aux tâches de virtualisation.
 
 \subsubsection{Hyperviseur "Hosted"}
 
@@ -68,7 +68,7 @@ Chacune de ces quatre fonctionalités est couverte par un serveur autonome, dans
 \paragraph{Serveur d'administration} Serveur, offrant un service de pilotage et de monitoring de l'activité du service de virtualisation. En général, c'est un service web, accessible à plusieurs classes d'utilisateurs, ayant des accréditation adaptées en fonction de leurs droits.
 
 \paragraph{Serveur de répartition de charge}
-"Ordonnanceur" du système de virtualisation, il prends en charge les demandes distanciation de VM et réparti ces demandes sur les ressources d'exécution qu'il tient à sa disposition.
+"Ordonnanceur" du système de virtualisation, il prends en charge les demandes de distanciation de VM et réparti ces demandes sur les ressources d'exécution qu'il tient à sa disposition.
 
 \paragraph{Serveur d'authentification} 
 Point d'entrée au service, ce serveur se charge de vérifier l'identité des différents clients effectuant une demande de connexion au service de VM, via par exemple le raccordement à un annuaire LDAP.
@@ -82,11 +82,11 @@ Deux stratégies quand à l'exécution des machines virtuelles :\\
 \item Exécution sur la machine client, utilisant alors le client comme hyperviseur dédidé. L'image de la machine est donc rapatriée depuis le serveur de stockage pour être exécutée, et backupée à intervalle régulier.
 \end{itemize}
 
-Dans notre cas, il est évident que l'utilisation du mode d'exécution local se révelle extrêmement intéressant, car il permettrait d'exploiter la totalité de la puissance de calcul des postes du département informatique.
+Dans notre cas, il est évident que l'utilisation du mode d'exécution local se révèle extrêmement intéressante, car il permettrait d'exploiter la totalité de la puissance de calcul des postes du département informatique.
 
 \subsubsection{Politique de gestion utilisateurs}
 
-Nous le verrons par la suite, beaucoup de services de virtualisation propose un lien étroit avec les systèmes d'annuaires LDAP.
+Nous le verrons par la suite, beaucoup de services de virtualisation proposent un lien étroit avec les systèmes d'annuaires LDAP.
 
 \subsection{Solutions existantes}
 
@@ -117,7 +117,7 @@ Tout les composants de cette suite logicielle sont directement racordable à un 
 \subsubsection{Citrix Xen}
 
 Citrix Xen constitue une solution également envisageable pour notre projet. \\
-La encore, le besoin fonctionnel est couvert dans sa totalité, par une suite de logiciels complet, le fonctionnement général du système de virtualisation reste similaire.
+Là encore, le besoin fonctionnel est couvert dans sa totalité, par une suite de logiciels complet, le fonctionnement général du système de virtualisation reste similaire.
 
 \paragraph{Citrix XenServer}
 XenServer constue la solution d'exécution de machines virtuelles Xen. Il s'agit d'un hyperviseur de type bare metal administrable à distance via un service fourni par l'éditeur. Les performances sont un peu en deça de la solution fournie par VMWare.
