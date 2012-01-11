@@ -1,3 +1,4 @@
+
 \section{Etat de l'art de la virtualisation de postes de travail}
 
 \subsection{Virtualisation ?}
@@ -89,8 +90,6 @@ Nous le verrons par la suite, beaucoup de services de virtualisation propose un 
 
 \subsection{Solutions existantes}
 
-\subsubsection{Citrix XenServer}
-
 \subsubsection{Solution VMWare}
 
 L'éditeur logiciel VMWare propose une solution répondant à nos besoins. La solution intégrée proposée couvre la totalité des besoins générés par l'adoption de ce type de technologie. La couverture de tout les logiciels d'exploitation par l'éditeur permet d'exploiter de nombreuses synergies entre ces différents composants, par exemple par la mise en place de protocoles propriétaires optimisés... Nous allons passer en revue les points clés de notre besoin.\\
@@ -110,14 +109,30 @@ Pour continuer, il est possible de rapatrier et d'exécuter sur la machine hébe
 
 \paragraph{Administration facilitée du parc de VM}
 \textbf{VMWare View Composer} Cette solution permet de générer un pool de machines virtuelles "filles" héritant d'une seule et même machine mère. Ainsi le déploiement et l'administration pour par exemple une plateforme de TP est grandement simplifiée. D'autant plus que les coûts de stockages sont réduits à environ 60\% d'après les dires du constructeur.\\
-De plus, une plateforme web...%TODO
+De plus, une plateforme web est disponible pour effectuer des tâches d'administration, elle est adaptée en fonction des droits de l'utilisateur final.
 
 \paragraph{Gestion des accès utilisateurs}
 Tout les composants de cette suite logicielle sont directement racordable à un annuaire LDAP, plus particulièrement Microsoft Active Directory, qui est actuellement utilisé pour le SI de l'école. Ainsi, nous serions en mesure de fournir une gestion fine des droits utilisateurs sur le système de machines virtuelles, par exemple au niveau de la création /administration de ces dernières, en se basant sur l'arbre de classes actuellement défini par l'annuaire de l'école.
 
-\subsubsection{Solution Microsoft Hyper-V}
+\subsubsection{Citrix Xen}
 
-\subsubsection{Proxmox \& solutions Open-Source}
+Citrix Xen constitue une solution également envisageable pour notre projet. \\
+La encore, le besoin fonctionnel est couvert dans sa totalité, par une suite de logiciels complet, le fonctionnement général du système de virtualisation reste similaire.
 
+\paragraph{Citrix XenServer}
+XenServer constue la solution d'exécution de machines virtuelles Xen. Il s'agit d'un hyperviseur de type bare metal administrable à distance via un service fourni par l'éditeur. Les performances sont un peu en deça de la solution fournie par VMWare.
 
-\subsection{Evaluation des solutions et choix}
+\paragraph{Citrix XenClient}
+Le client Xen est la solution d'accès au services de virtualisation depuis un poste client. A la différence du client VMWare, il s'agit d'un client de type Bare-Metal installé sur les clients. Cela demeure extrêmement avantageux en terme de sécurité et de gestion de configuration. La fonctionnalité d'exécution en local et distante est pleinement supportée.
+
+La couverture fonctionnelle est assurée par d'autres logiciels, qui différent peu en terme de fonctionnalités.\\
+
+Cette solution est globalement plus accessible que la solution VMWare, et demeure intéressante pour son client, qui lève toute les contraintes d'administration des postes locaux. 
+
+\section{État des lieux du SI du département IF}
+
+Le département informatique posséde actuellement quelques serveurs et environ 200 postes fixes, une cinquantaines de machines déportées de type blades.\\
+Du coté serveurs, il est clair que l'implantation d'un système de virtualisation nécessitera une augmentation conséquente du parc serveur.\\
+En revanche, il est intéressant de pouvoir exploiter les ressources locales des machines, vu la multitude de postes physiques présents sur site. Cela peut en revanche poser des soucis en termes d'administration, et de gestion du volume de données qui transite par le réseau.\\
+En termes de réseau, c'est probablement le point qui va probablement être le plus limitant pour notre solution. En effet, l'infrastructure passive actuellement déployée est relativement ancienne et les débits de données se retrouvent grandement limités. Ainsi, il n'est pas envisageable d'utiliser une solution en rapatriant des images de VM sur les machines locales, cela génèrerait un pic de charge que le réseau ne pourrait supporter.\\
+
