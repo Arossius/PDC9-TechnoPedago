@@ -1,1 +1,118 @@
 \section{Objectifs fonctionnels}
+
+\subsection{Présentation générale}
+
+\paragraph{} Nous souhaitons mettre en place un environnement de travail basé
+sur l'utilisation de postes virtuels à destination des étudiants et des
+enseignants du département informatique de l'INSA de Lyon.
+
+\paragraph{} L'utilisation de machines virtuelles offre de nombreux avantages
+pour les utilisateurs :
+
+\begin{description}
+  \item[Flexibilité] Les utilisateurs peuvent être administrateurs de leur
+  environnement : ils peuvent choisir leur système d'exploitation et le
+  maintenir comme ils le souhaitent, à l'image de leur ordinateur personnel.
+  Par ailleurs, les équipes pédagogiques peuvent mettre en place des
+  environnements qui correspondent exactement aux besoins des travaux pratiques
+  sans risquer de compromettre l'intégrité de l'environnement, et donc de
+  provoquer des conflits avec d'autres outils.
+  \item[Sécurité] La virtualisation permet aux administrateurs de contrôler
+  l'allocation des ressources matérielles. Les différents postes sont exécutés
+  dans des cages (Sandbox), et ne peuvent donc pas s'en prendre directement au
+  matériel.\\
+  On notera que l'accès aux répertoires partagés peut être limités en
+  faveur de la mise à disposition des documents directement dans les machines
+  virtuelles configurées par les enseignants. Par ailleurs, le partage de
+  fichiers offre, avec cette solution, le même niveau de sécurité que l'accès
+  aux documents par les utilisateurs depuis l'extérieur du réseau INSA via
+  SFTP.\\
+  Enfin, les utilisateurs peuvent conserver le contrôle intégral des données
+  qu'ils manipulent sur les machines virtuelles.
+  \item[Portabilité] Les étudiants ayant besoin de travailler à distance
+  peuvent télécharger une copie des machines virtuelles et les exécuter sur
+  leur ordinateur personnel en utilisant un hyperviseur compatible. Par
+  ailleurs, la diversité du matériel est lissée par l'hyperviseur.
+  \item[Facilité d'utilisation] Les outils d'administration mis à disposition
+  de la plupart des hyperviseurs offrent des utilitaires graphiques accessibles.
+  \item[Amélioration de la maintenance] La maintenance de l'environnement est
+  simplifiée à moyen terme. En effet, une machine virtuelle abimée peut être
+  restaurée rapidement à son état initial grâce aux sauvegardes.\\
+  Par ailleurs, la procédure de sauvegarde est uniforme (on sauvegarde l'image
+  de la machine, peu importe son système d'exploitation).\\
+  Enfin, l'infrastructure supportant des hyperviseurs bare-metal en réseau
+  peut être mise à jour de manière pratiquement transparente : on installe un
+  nouveau serveur d'exécution et l'ajoute au réseau. Un serveur ordonnanceur
+  pourra alors utiliser directement sa puissance de calcul pour exécuter les
+  machines virtuelles.
+  \item[Performance] Malgré le coût de la virtualisation en terme de
+  ressources, il est possible d'abstraire la quantité de ressource
+  (calcul, mémoire) disponible pour une machine virtuelle de la quantité de
+  ressource effectivement mise en place dans le matériel. En effet, il est
+  possible d'exécuter une machine virtuelle sur plusieurs serveurs, et donc de
+  mettre facilement en place des solutions de calcul distribué.
+\end{description}
+
+\subsection{Environnement utilisateur}
+
+\paragraph{} Les utilisateurs ont accès, depuis n'importe quel poste mis à sa
+disposition, à un ensemble d'images de machines virtuelles qu'il peut exécuter.
+Il est libre de créer, modifier et supprimer les caractéristiques de ses
+machines virtuelles.
+
+\paragraph{} Chaque utilisateur dispose d'un quota de ressource qu'il peut
+utiliser librement. Par exemple, on peut mettre à disposition de chaque
+utilisateur l'équivalent d'un coeur (processeur) cadencé à 1,6Ghz, 2Go de
+mémoire vive et 15 Go de stockage qu'il est libre d'utiliser comme il le
+souhaite.
+
+\paragraph{} Lorsqu'un utilisateur accède à un poste, il s'authentifie et
+accède à la liste des machines qu'il peut lancer. Enfin, il peut lancer une
+machine virtuelle sur le poste.
+
+\subsection{Services à disposition des enseignants}
+
+\paragraph{} Les enseignants disposent d'outils supplémentaires. Ils peuvent
+notamment créer des images de machines virtuelles qui peuvent être dupliquées
+et affectées aux étudiants.
+
+\paragraph{} Les enseignants peuvent donner des droits limités aux étudiants
+(ils ne peuvent, par exemple, pas contrôler le quota de ressources disponibles)
+sur ces machines et peuvent toujours y accéder.
+
+\paragraph{} Les enseignants peuvent également retirer les accès aux étudiants,
+ou déclencher des sauvegardes forcées, par exemple pour fixer la date limite de rendu des projets.
+
+\subsection{Services à disposition des administrateurs}
+
+\paragraph{} Les administrateurs disposent d'un ensemble d'outils permettant
+d'administrer le système.
+
+\begin{description}
+  \item[Monitoring] L'état des serveurs et des machines virtuelles est contrôlé
+  en temps réel. Les administrateurs peuvent contrôler la charge des serveurs,
+  le nombre de machines lancées, le trafic sur le réseau, etc.
+  \item[Administration des machines] Les administrateurs contrôlent les droits
+  et les propriétés des machines virtuelles à disposition des utilisateurs.
+  \item[Gestion des utilisateurs] Les administrateurs peuvent contrôler les
+  groupes et les droits des utilisateurs ayant accès au système.
+  \item[Contrôle des paramètres du système] Les administrateurs peuvent,
+  notamment, paramétrer les liens avec les les annuaires d'utilisateurs.
+  \item[Gestion de modèles de machines virtuelles] Les administrateurs peuvent
+  mettre à disposition des images standards de machines, permettant aux
+  utilisateurs ne souhaitant pas configurer leur machine de déployer rapidement
+  une machine virtuelle pré-configurée par les administrateurs.
+\end{description}
+
+\subsection{Outils de monitoring}
+
+\paragraph{} Sur les systèmes d'exploitation supportés, il est possible
+d'installer des outils permettant aux enseignants de contrôler l'état des
+machines, par exemple pour vérifier le résultat d'un TP.
+
+\subsection{Partage des documents}
+
+\paragraph{} Il est possible de configurer les machines virtuelles pour mettre
+en place des points de montage liés à un système de fichier partagé par
+l'ensemble des machines virtuelles. Ceci peut, par exemple, permettre de
+partager un répertoire utilisateur (ou groupe) sur plusieurs machines.
