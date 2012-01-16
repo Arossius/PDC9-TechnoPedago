@@ -1,0 +1,63 @@
+\documentclass[a4paper]{article}
+\input{nation}
+
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=false, % bool: Liens colorés
+pdfborder={0 0 0} % Ne pas encadrer les liens
+}
+
+\usepackage[final]{pdfpages}
+\usepackage{rotating}
+\usepackage{eurosym}
+\usepackage{lscape}
+\usepackage{float}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage[printonlyused]{acronym}
+
+% définir les commandes ici
+
+% s'il y a beaucoup de commandes et de packages à inclure n'h&ésitez pas
+% à mettre tout ça dans un fichier include.tex et l'inclure
+% \input{include.tex}
+
+\lhead{PdC2 - Dossier d'Architecture}
+\rhead{\includegraphics [width=1.5cm]{insa-couleur.jpg}}
+\rfoot{\thepage\ de \pageref{LastPage}}
+
+
+
+\begin{document}
+\title{PdC 9 : Environement Technico-pédagogique}
+\author{Adrien Brochot, Julien Levesy, Martin Richard, Armand Rossius}
+
+%------------------------------------- Page de titre
+\maketitle
+%\begin{titlepage}
+%~
+
+%\vfill
+%\begin{Large}
+%Septembre 2011
+%\end{Large}
+%\vfill
+%\end{titlepage}
+%----------------------------------------------------
+
+%--------------------------------- Table des matières
+\newpage
+\tableofcontents
+\newpage
+%----------------------------------------------- Plan
+\input{Introduction.tex}
+\newpage
+\input{Objectifs.tex}
+\newpage
+\input{Logiciel.tex}
+\newpage
+\input{Materiel.tex}
+
+\end{document}
+
