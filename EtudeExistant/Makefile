@@ -1,7 +1,8 @@
 TARGET=Existant.pdf
-INCLUDES=Introduction.tex
+INCLUDES=Introduction.tex Analyse.tex
 ASSETS=
 TEXFILE=Existant.tex
+CC=pdflatex -halt-on-error
 
 all: $(TARGET)
 
@@ -13,5 +14,5 @@ cleantmp:
 
 $(TARGET): $(TEXFILE) $(INCLUDES) $(ASSETS)
 #Once for toc, hyper-refs, etc, and once for good
-	pdflatex $(TEXFILE)
-	pdflatex $(TEXFILE)
+	$(CC) $(TEXFILE)
+	$(CC) $(TEXFILE)

@@ -5,135 +5,342 @@
 
 \subsubsection{Qu'est ce que c'est ?}
 
-Virtualiser une machine, reviens à exécuter un ou plusieurs systèmes d'exploitation dans un contexte dit virtuel. Ce qui signifie que l'OS n'a pas la main directement sur le matériel, mais via une couche d'abstraction intermédiaire.\\ 
+\paragraph{} Virtualiser une machine revient à exécuter un ou plusieurs
+systèmes d'exploitation dans un contexte dit virtuel. Le matériel constituant la
+machine virtuelle est émulé par un logiciel chargé d'être l'intermédiaire entre
+l'ordinateur physique (l'hôte) et le système virtuel (la cible).
 
-Le principe de fonctionnement est relativement simple : \\
+\paragraph{} Le principe de fonctionnement est relativement simple :
 \begin{itemize}
-\item  Une machine hote, fonctionnant à l'aide de n'importe quel système d'exploitation héberge un logiciel de virtualisation .
-\item Ce logiciel de virtualisaiton manipule des images de machines virtuelles, et les exécutes dans un contexte virtuel différent, simplifiant la cohabitation entre les différents systèmes d'exploitation.
-\item Ces machines possèdent les mêmes caractéristiques qu'une machine physique, des ressources de la machines hôte lui sont attribuées (ie, une quantité de mémoire fixe,  des coeurs du processeur...)
-\item Via le logiciel de virtualisation, les machines exécutées peuvent accéder aux ressources de la machine physique, par exemple une imprimante raccordée en usb... etc...
-\item Il est alors possible de manipuler facilement une machine virtuelle via son image, elle devient exécutable sur n'importe quel poste exécutant un logiciel de virtualisation. De plus, les opérations de clonage, de sauvegarde / restauration deviennent extrêmement simples.
+\item  On installe sur une machine hôte, un logiciel de virtualisation. Celui-ci
+peut fonctionner sur un système d'exploitation existant ou être directement
+intégré à un système d'exploitation dédié.
+\item Ce logiciel de virtualisation manipule des images de machines virtuelles,
+qui définissent le matériel virtuel de la machine cible. Généralement, c'est
+images sont liés à un disque dur virtuel, qui contient le système d'exploitation
+de la machine virtuelle. Une image de machine est exécutée dans un contexte qui
+lui est propre. Cela signifie que la machine virtuelle dispose, notamment, de
+son propre espace mémoire. Ainsi, le système d'exploitation de la machine hôte
+et ceux des machines cibles fonctionnent de manière autonomes. Ceci permet, au
+final, d'exécuter n'importe quel système d'exploitation cible, même si, dans
+certains cas, ce système d'exploitation est conçu pour du matériel complètement
+différent de celui de l'ordinateur hôte.
+\item On dotera généralement les machines virtuelles des mêmes caractéristiques
+qu'une machine physique. Le système d'exploitation cible n'aura généralement pas
+"conscience" qu'il est exécuté dans un environnement virtuel. Ainsi, on attribue
+des ressources de la machines hôte : une quantité de mémoire fixe, un quota
+d'accès aux coeurs des processeurs.
+\item Un logiciel de virtualisation permet généralement de contrôler l'accès aux
+périphériques (réseau, USB, etc), ainsi les machines exécutées peuvent accéder
+aux ressources à disposition de l'hôte.
+\item Il est alors possible de manipuler facilement une machine virtuelle via
+son image, elle devient exécutable sur n'importe quel poste exécutant un
+logiciel de virtualisation. De plus, les opérations de clonage, de sauvegarde et
+restauration deviennent généralement simples.
 \end{itemize}
 
 \subsubsection{Technologies}
 
+\paragraph{} La virtualisation d'un système peut s'effectuer à plusieurs niveaux
+: on peut vouloir émuler le matériel ou simplement cloisonner l'exécution de
+certains processus (Sandboxing).
+
 \begin{itemize}
-\item Noyau partagé \& Isolateur : Cette solution n'est pas à proprement parler de la virtualisation, car il s'agit juste d'isoler des processus de façon à pouvoir permettre leur exécution simultanée, alors qu'ils ne sont pas prévus pour fonctionner simultanément. Les performances sont bonnes, car peu d'overhead est généré à l'exécution, mais cela est réservé aux systèmes Linux uniquement, car le procédé est extrêmement dépendant du système.
-\item Noyau en User Space : Cela reviens à exécuter le noyau hébergé dans l'user space de la machine hôte, sans abstraction ni optimisation au niveau matériel. La encore réservée aux systèmes linux, cette solution se révelle peu performante et difficile à mettre en place.
-\item Émulation matérielle  : dernière solution, elle consiste à créer une couche d'émulation matérielle entre la machine hôte et la machine hébergée, afin de gérer et d'optimiser les interactions avec le matériel. Le type de logiciel utilisé pour exécuter ces machines virtuelles est appelé hyperviseur.
+\item Noyau partagé \& Isolateur : cette solution de virtualisation a été conçue
+pour le noyau Linux. Il s'agit ici seulement d'isoler des processus de façon à
+pouvoir permettre leur exécution simultanée sans qu'ils puissent entrer en
+concurrence. Chaque appel système effectué par un processus isolé est filtré et
+potentiellement réécrit pour ne pas pénaliser le système. Cette solution offre
+des bonnes performances, car le surcoût à l'exécution (overhead) est limité : le
+noyau n'est chargé qu'une fois en mémoire et le matériel est sollicité
+directement. En contrepartie, il n'est pas possible d'exécuter plusieurs
+systèmes d'exploitation simultanément.
+\item Noyau en User Space : Cela reviens à exécuter le noyau hébergé dans l'user
+space de la machine hôte, c'est à dire exécuter un noyau Linux comme un
+programme classique sans abstraction du matériel. Cette solution n'a été
+implémentée que sur un système Linux, et n'est pas réellement exploitée car elle
+se révèle peu performante et difficile à mettre en place.
+\item Émulation matérielle : Cette troisième solution consiste à créer une
+couche d'émulation matérielle entre la machine hôte et la machine hébergée, afin
+de créer un environnement matériel virtuel. Le type de logiciel utilisé
+permettant d'exécuter ces machines virtuelles est appelé hyperviseur. Si le type
+de matériel de la machine hébergée et de la machine hôte est compatible, il est
+possible d'exploiter le matériel sans véritable émulation logicielle. Des
+constructeurs tels qu'Intel proposent des processeurs capables d'exécuter des
+instructions dédiées à la virtualisation.
 \end{itemize}
 
 \subsubsection{Avantages ?}
 
-A première vue, l'introduction d'une couche intermédiaire entre l'OS et le matériel peut être vue comme une source de complexité supplémentaire et donc un overhead certain. Cela est de moins en moins vrai compte tenu des différentes technologies d'hyperviseurs, l'intégration et l'optimisation de ces derniers allant jusqu'à la microprogramation des processeurs actuels.\\
-Passé ce léger défaut, cela contribue à la mutualisation des ressources d'exécution et facilite l'équilibrage de charge. Par exemple, la mutualisation de quatre serveurs sur une seule machine physique peut se révéler intéressante en terme de coût et de consommation énergétique.\\
-De plus, l'aspect dématérialise de ce type de machine permet de rendre beaucoup plus facile l'administration et la manipulation de ces dernières.
+\paragraph{} À première vue, l'introduction d'une couche intermédiaire entre
+l'OS et le matériel peut être vue comme une source de complexité supplémentaire,
+une réduction des performances et donc d'un surcout (overhead) certain.
+La virtualisation est aujourd'hui un enjeu industriel qui a conduit au
+développement de différentes technologies d'hyperviseurs, qui l'intègrent
+aujourd'hui des optimisations matérielles très puissantes, allant jusqu'à la
+microprogrammation des processeurs actuels.
+
+\paragraph{} Au delà du léger impact sur la performance, la virtualisation
+contribue à la mutualisation des ressources d'exécution et facilite
+l'équilibrage de charge. Par exemple, la mutualisation de quatre serveurs sur
+une seule machine physique peut se révéler intéressante en terme de coût et de
+consommation énergétique.
+
+\paragraph{} De plus, l'aspect dématérialisé de ce type de machine permet de
+rendre beaucoup plus facile l'administration et la manipulation de ces
+dernières.
 
 \subsection{Hyperviseur ?}
 
-Comme énoncé un peu plus haut, un hyperviseur est un logiciel d'exécution de machines virtuelles. L'objectif de ce logiciel est dans un premier temps de créer une couche d'abstraction matérielle entre lui et l'OS hébergé, et ensuite de gérer les ressources de la machine hôte en les allouant aux différentes machines virtuelles qu'il exécute en fonction du besoin.\\
-D'autre fonctionnalités sont alloués, comme la gestion de l'accès aux ressources physique de la machine hôte, ou encore les backups des différentes machines virtuelles exécutées.\\
-On distingues deux catégories d'hypervieurs :\\
+\paragraph{} Comme énoncé un peu plus haut, un hyperviseur est un logiciel
+d'exécution de machines virtuelles. L'objectif de ce logiciel est dans un
+premier temps de créer une couche d'abstraction matérielle entre le système hôte
+et l'OS hébergé, et ensuite de gérer les ressources de la machine hôte en les
+allouant aux différentes machines virtuelles qu'il exécute en fonction des
+besoins.
+
+\paragraph{} En plus de ces fonctionnalités fondamentales, les hyperviseurs
+proposent des souvent des outils complémentaires, comme la gestion de l'accès aux
+ressources physiques de la machine hôte, ou encore les sauvegardes (backups) des
+différentes machines virtuelles exécutées.
+
+\paragraph{} On distingues deux catégories d'hypervieurs.
 
 \subsubsection{Hyperviseur "Bare Metal"}
 
-Ces hyperviseurs intégrent le système d'exploitation de l'hote. Ce sont généralement des systèmes ultra-légers et optimisés de façon. Ainsi, les pertes de performances sont limités, l'hyperviseur Bare Metal limitant grandement l'overhead nécessaire à l'exploitation de la machine. Cependant, la machine exécutant cet OS est donc dédiée aux tâches de virtualisation.
+\paragraph{} Ces hyperviseurs intégrent le système d'exploitation de l'hôte. Ce
+sont généralement des systèmes ultra-légers et optimisés pour la virtualisation.
+Ainsi, les pertes de performances sont totalement limités, car l'hyperviseur
+Bare Metal réduit grandement le surcoût nécessaire à l'exploitation de la
+machine. Cependant, la machine hôte exécutant cet OS est nécessairement dédiée
+aux tâches de virtualisation.
 
 \subsubsection{Hyperviseur "Hosted"}
 
-A l'inverse, l'hyperviseur est ici exécuté dans l'user space d'un OS standard. Les performances dédiées aux VM sont donc moins importantes, mais la machine hôte n'est pas dédiée à la virtualisation, ce qui est très pratique pour faire cohabiter des systèmes d'exploitation sur un ordinateur, et plus accessible qu'une solution de dual-boot standard.
+\paragraph{} À l'inverse, l'hyperviseur est ici exécuté comme un programme
+utilisateur sur un système d'exploitation quelconque. Les performances dédiées
+aux machines virtuelles sont moins importantes (l'hyperviseur n'ayant pas
+nécessairement une priorité sur les autres programmes), mais cette solution
+permet notamment de déployer des machines virtuelles sur un poste de travail
+classique, et donc de faire cohabiter des systèmes d'exploitation sur un
+seul ordinateur de manière plus flexible qu'avec une solution de dual-boot.
 
 \subsection{Déploiement au sein d'une architecture réseau}
 
-Intéressons nous maintenant d'un peu plus prêt à l'architecture d'un système de virtualisation et à son implémentation dans un SI.
+\paragraph{} Intéressons nous maintenant d'un peu plus prêt à l'architecture
+d'un système de virtualisation et à son implémentation dans un SI.
 
 \subsubsection{Serveurs}
 
-Afin d'exploiter un système de virtualisation globalisé à un SI, plusieurs fonctionnalités principales sont nécessaires :\\
+\paragraph{} Afin d'exploiter un système de virtualisation globalisé à un SI,
+plusieurs fonctionnalités principales sont nécessaires :
+
 \begin{itemize}
-\item Exécuter des VM sur des ressources partagées
-\item Stocker et synchroniser le parc de VM
-\item Administrer le parc de VM
-\item Répartir la charge sur les différents hyperviseurs bare-metal.
-\item Administrer le parc utilisateur et gérer les droits\\
+\item Exécuter des VM (Virtual Machines, ou Machines virtuelles) sur des
+ressources partagées,
+\item Stocker et synchroniser le parc de VM,
+\item Administrer le parc de VM,
+\item Répartir la charge sur les différents hyperviseurs bare-metal,
+\item Administrer le parc utilisateur et gérer les droits.
 \end{itemize} 
 
-Chacune de ces quatre fonctionalités est couverte par un serveur autonome, dans une architecuture de VM nous retrouverons donc :\\
+\paragraph{} Chacune de ces quatre fonctionalités peut être couverte par un serveur
+autonome, dans une architecuture de VM nous retrouverons donc :
 
-\paragraph{Grappe de serveurs d'exécution} Serveurs exécutant des hyperviseurs de type bare-metal,  ayant pour objectif de fournir une ressource matérielle dédiée à l'exécution des machines virtuelles. Ils sont administrés à distance, la charge étant répartie par un autre serveur. 
+\paragraph{Grappe de serveurs d'exécution} Serveurs exécutant des hyperviseurs
+de type bare-metal,  ayant pour objectif de fournir une ressource matérielle
+dédiée à l'exécution des machines virtuelles. Ils sont administrés à distance,
+la charge étant répartie par un autre serveur (le Scheduler, ou Ordonnanceur). 
 
-\paragraph{Serveur de Stockage / Synchronisation des données} Ces serveurs sont en charge de stocker les images de machines virtuelles et de garantir le backup de ces dernières pendant leur exécution.
+\paragraph{Serveur de Stockage, ou de Synchronisation des données} Ces serveurs
+sont en charge de stocker les images de machines virtuelles et de garantir leur
+sauvegarde pendant leur exécution.
 
-\paragraph{Serveur d'administration} Serveur, offrant un service de pilotage et de monitoring de l'activité du service de virtualisation. En général, c'est un service web, accessible à plusieurs classes d'utilisateurs, ayant des accréditation adaptées en fonction de leurs droits.
+\paragraph{Serveur d'administration} Serveur offrant un service de pilotage et
+de monitoring de l'activité du service de virtualisation. En général, c'est un
+service web, accessible à plusieurs classes d'utilisateurs, ayant des
+accréditations adaptées en fonction de leurs droits.
 
-\paragraph{Serveur de répartition de charge}
-"Ordonnanceur" du système de virtualisation, il prends en charge les demandes distanciation de VM et réparti ces demandes sur les ressources d'exécution qu'il tient à sa disposition.
+\paragraph{Serveur de répartition de charge} Ordonnanceur du système de
+virtualisation, il prends en charge les demandes d'instanciation (création et
+démarrage) des VM et répartit les demandes sur les ressources d'exécution qu'il
+tient à sa disposition.
 
-\paragraph{Serveur d'authentification} 
-Point d'entrée au service, ce serveur se charge de vérifier l'identité des différents clients effectuant une demande de connexion au service de VM, via par exemple le raccordement à un annuaire LDAP.
+\paragraph{Serveur d'authentification} Ce serveur gère l'annuaire des
+utilisateurs et se charge de vérifier l'identité des différents clients
+effectuant une demande de connexion au service de VM, via par exemple le
+raccordement à un annuaire LDAP.
 
 \subsubsection{Postes de travail physiques}
 
-Les postes de travails physiques exécutent un client qui se connecte au système de virtualisation. Il intègre tout les utilitaires nécessaires à l'accès aux ressources physique de la machine hébergeant le client, pour donner l'impression à l'utilisateur final que la VM s'exécute comme OS principal de la machine.\\
-Deux stratégies quand à l'exécution des machines virtuelles :\\
+\paragraph{} Les postes de travail physiques exécutent un client qui se connecte
+au système de virtualisation. Il intègre tout les logiciels nécessaires à
+l'accès aux ressources physiques de la machine hébergeant le client, rendant
+ainsi l'exécution de la machine virtuelle transparente.
+
+\paragraph{} Nous pouvons évoquer deux stratégies quand à l'exécution des
+machines virtuelles :
+
 \begin{itemize}
-\item Exécution distante (sur un hyperviseur bare-metal) et accès via un protocole de bureau à distance, type VNC ou encore protocole propriétaire PCoIP (VWare...) . Centralise l'exécution et réparti efficacement la charge.
-\item Exécution sur la machine client, utilisant alors le client comme hyperviseur dédidé. L'image de la machine est donc rapatriée depuis le serveur de stockage pour être exécutée, et backupée à intervalle régulier.
+\item L'exécution de la machine virtuelle se déroule sur un serveur distant (sur
+un hyperviseur bare-metal) et le client à accède via un protocole de bureau à
+distance, type VNC, PCoIP (Protocole propriétaire développé par VWare), ou à
+l'aide de boitiers KVM (Keyboard, Video, Mouse) permettant de multiplexer sur le
+réseau ethernet la communication entre le clavier, la souris, l'écran et l'unité
+centrale. L'exécution des VM est centralisé et la charge est répartie par
+l'ordonnanceur.
+\item L'exécution s'effectue sur le poste client, utilisant alors le client
+comme hyperviseur dédidé. L'image de la machine est téléchargée depuis le
+serveur de stockage pour être exécutée, et régulièrement sauvegardée.
 \end{itemize}
 
-Dans notre cas, il est évident que l'utilisation du mode d'exécution local se révelle extrêmement intéressant, car il permettrait d'exploiter la totalité de la puissance de calcul des postes du département informatique.
+\paragraph{} Les deux solutions sont pratiquement antagonistes : leurs avantages
+et inconvénients respectifs s'opposent pratiquement. En effet, l'exécution
+sur le poste client est globalement plus souple, répartit la charge de
+l'exécution des machines virtuelles et s'affranchit de la question du contrôle
+de l'environnement à distance.
+
+\paragraph{} Cependant, cette solution devient inutilisable à partir d'un
+certain volume de postes. Il devient nécessaire de disposer de postes clients
+suffisament performants d'une part, et d'autre part, le transfert des images de
+machines virtuelles solliciterai beaucoup trop le réseau lors de leur lancement.
+Il faudrait alors plusieurs minutes pour qu'un utilisateur puisse télécharger et
+exécuter son environement de travail.
 
 \subsubsection{Politique de gestion utilisateurs}
 
-Nous le verrons par la suite, beaucoup de services de virtualisation propose un lien étroit avec les systèmes d'annuaires LDAP.
+\paragraph{} Nous le verrons par la suite, beaucoup de services de
+virtualisation peuvent s'interfacer facilement avec des systèmes d'annuaire
+utilisés sur le marché, comme les annuaires LDAP ou ActiveDirectory (de
+Microsoft), utilisés dans de nombreuses infrastructures.
 
 \subsection{Solutions existantes}
 
+\paragraph{} Dans cette section, nous étudierons les solutions commerciales de virtualisation d'environement reconnues pour être utilisables
+dans des environnements de grande échelle.
+
 \subsubsection{Solution VMWare}
 
-L'éditeur logiciel VMWare propose une solution répondant à nos besoins. La solution intégrée proposée couvre la totalité des besoins générés par l'adoption de ce type de technologie. La couverture de tout les logiciels d'exploitation par l'éditeur permet d'exploiter de nombreuses synergies entre ces différents composants, par exemple par la mise en place de protocoles propriétaires optimisés... Nous allons passer en revue les points clés de notre besoin.\\
+\paragraph{} VMWare est l'éditeur de solution de virtualisation leader du
+marché. VMWare propose une solution de virtualisation complète qui répond
+efficacement à nos besoins. La solution intégrée proposée couvre la totalité des
+besoins générés par l'adoption de ce type de technologie. La couverture de tout
+les logiciels d'exploitation par l'éditeur permet d'obtenir une solution
+cohérente de bout en bout entre ces différents composant. En contrepartie, cette
+solution impose la dépendance à des certains protocoles propriétaires optimisés.
+
+\paragraph{} Nous allons passer en revue les points clés de notre besoin.
 
 \paragraph{Hébergement centralisé de machines virtuelles}
 
-\textbf{VMWare ESXi} est un hyperviseur de type bare-metal, reconnu comme l'un des meilleurs du marché actuellement. L'avantage de ce type de solution à OS ultra léger est double, d'une part l'optimisation du fonctionnement de l'hyperviseur exploitant au maximum les ressources du serveur, d'autre part une plus grande sécurité sur cette plateforme.
+\paragraph{} \textbf{VMWare ESXi} est un hyperviseur de type bare-metal, reconnu
+comme l'un des meilleurs du marché actuellement. L'avantage de ce type de
+solution à OS ultra léger est double, d'une part l'optimisation du
+fonctionnement de l'hyperviseur exploitant au maximum les ressources du serveur,
+d'autre part une plus grande sécurité sur cette plateforme.
 
 \paragraph{Équilibrage de charge sur les différents serveurs}
 
-\textbf{VMWare vCenter Server} offre une solution de supervision de l'activité du parc de VM en permettant d'allouer dynamiquement les VM en activité sur le parc de serveur, ainsi nous sommes surs de tirer parti au maximum des ressources d'exécution des serveurs, et ce sans interruption de service pour l'utilisateur. Nous envisageons cette solution pour les machines dites "partagées" uniquement, par exemple les serveurs de TP entre autres...
+\paragraph{} \textbf{VMWare vCenter Server} offre une solution de supervision de
+l'activité du parc de VM en permettant d'allouer dynamiquement les VM en
+activité sur le parc de serveur, ainsi nous sommes surs de tirer parti au
+maximum des ressources d'exécution des serveurs, et ce sans interruption de
+service pour l'utilisateur. Nous envisageons cette solution pour les machines
+dites "partagées" uniquement, par exemple les serveurs de TP entre autres.
 
 \paragraph{Client d'accès dédié}
-Le client VMWare View fourni un moyen flexible d'exploiter les différentes machines virtuelles du système.\\
-Tout d'abord, il est multiplateforme, (Windows, Linux, MacOS, Android, autres...) et cela se révèle extrêmement intéressant en terme de limitation de coûts, car il serait alors envisageable de migrer la totalité du parc de machines physiques  sur un système libre, l'utilisateur final étant parfaitement libre de choisir son OS sur sa VM.\\ 
-Pour continuer, il est possible de rapatrier et d'exécuter sur la machine hébergeant le client les machines virtuelles, permettant d'exploiter le parc de machines physiques présentes localement. Cela peut s'avérer extrêmement intéressant la encore, pour exploiter l'existant technique (ie le parc de machines) sans avoir besoin de renouveler les serveurs... Car exécuter de façon distante les VM impliquerais un renouvellement du parc de serveurs.\\
+\paragraph{} Le client VMWare View fourni un moyen flexible d'exploiter les
+différentes machines virtuelles du système.
+
+\paragraph{} Tout d'abord, il est multi-plateforme (Windows, Linux, MacOS,
+Android, autres) et cela se révèle extrêmement intéressant en terme de
+limitation de coûts, car il devient alors envisageable de migrer la totalité du
+parc de machines physiques  sur un système libre, l'utilisateur final étant
+libre de choisir son OS sur sa VM.
+
+\paragraph{} Pour continuer, il est possible de rapatrier et d'exécuter sur la
+machine hébergeant le client les machines virtuelles, permettant d'exploiter le
+parc de machines physiques présentes localement. Cela peut s'avérer extrêmement
+intéressant là encore pour exploiter l'existant technique (le parc de machines)
+sans avoir besoin de renouveler les serveurs. Car exécuter de façon distante les
+machines virtuelles impliquerait un renouvellement du parc de serveurs.
 
 \paragraph{Administration facilitée du parc de VM}
-\textbf{VMWare View Composer} Cette solution permet de générer un pool de machines virtuelles "filles" héritant d'une seule et même machine mère. Ainsi le déploiement et l'administration pour par exemple une plateforme de TP est grandement simplifiée. D'autant plus que les coûts de stockages sont réduits à environ 60\% d'après les dires du constructeur.\\
-De plus, une plateforme web est disponible pour effectuer des tâches d'administration, elle est adaptée en fonction des droits de l'utilisateur final.
+
+\paragraph{} \textbf{VMWare View Composer} Cette solution permet de générer un
+ensemble (pool) de machines virtuelles "filles" héritant d'une seule et même
+machine mère. Ainsi le déploiement et l'administration d'un ensemble de machines
+semblables est grandement simplifiée. Cette solution, par exemple, devient utile
+pour déployer une plateforme de TP. Par ailleurs, cette solution permet
+d'optimiser le stockage et d'en réduire les coûts d'environ 60\% (d'après
+l'éditeur).
+
+\paragraph{} Une plateforme web est disponible pour effectuer des tâches
+d'administration, elle est adaptée en fonction des droits de l'utilisateur
+final.
 
 \paragraph{Gestion des accès utilisateurs}
-Tout les composants de cette suite logicielle sont directement racordable à un annuaire LDAP, plus particulièrement Microsoft Active Directory, qui est actuellement utilisé pour le SI de l'école. Ainsi, nous serions en mesure de fournir une gestion fine des droits utilisateurs sur le système de machines virtuelles, par exemple au niveau de la création /administration de ces dernières, en se basant sur l'arbre de classes actuellement défini par l'annuaire de l'école.
+
+\paragraph{} Tous les composants de cette suite logicielle peuvent être
+connectés à des systèmes d'annuaire comme LDAP ou Microsoft ActiveDirectory, qui
+est actuellement utilisé par le SI de l'INSA de Lyon. Ainsi, nous serions en
+mesure de fournir une gestion fine des droits utilisateurs sur le système de
+machines virtuelles, par exemple au niveau de la création et l'administration de
+ces dernières en se basant sur les classes d'utilisateurs actuellement définies
+dans l'annuaire de l'école.
 
 \subsubsection{Citrix Xen}
 
-Citrix Xen constitue une solution également envisageable pour notre projet. \\
-La encore, le besoin fonctionnel est couvert dans sa totalité, par une suite de logiciels complet, le fonctionnement général du système de virtualisation reste similaire.
+\paragraph{} Citrix Xen constitue une solution également envisageable pour notre
+projet.
+
+\paragraph{} Citrix Xen couvre le besoin fonctionnel dans sa totalité grâce à
+une suite de logiciels complète. Le fonctionnement général du système de
+virtualisation est similaire à celui proposé par VMWare.
 
 \paragraph{Citrix XenServer}
-XenServer constue la solution d'exécution de machines virtuelles Xen. Il s'agit d'un hyperviseur de type bare metal administrable à distance via un service fourni par l'éditeur. Les performances sont un peu en deça de la solution fournie par VMWare.
+
+\paragraph{} XenServer constitue la solution d'exécution de machines virtuelles
+Xen. Il s'agit d'un hyperviseur de type bare-metal administrable à distance via
+un service fourni par l'éditeur. Les performances mesurées sont cependant en
+deça de la solution fournie par VMWare.
 
 \paragraph{Citrix XenClient}
-Le client Xen est la solution d'accès au services de virtualisation depuis un poste client. A la différence du client VMWare, il s'agit d'un client de type Bare-Metal installé sur les clients. Cela demeure extrêmement avantageux en terme de sécurité et de gestion de configuration. La fonctionnalité d'exécution en local et distante est pleinement supportée.
 
-La couverture fonctionnelle est assurée par d'autres logiciels, qui différent peu en terme de fonctionnalités.\\
+\paragraph{} Le client Xen est la solution d'accès au services de virtualisation
+depuis un poste client. A la différence du client VMWare, il s'agit d'un client
+de type bare-metal installé sur les postes clients. Cela demeure extrêmement
+avantageux en terme de sécurité et de gestion de configuration. La
+fonctionnalité d'exécution en local et distante est pleinement supportée.
 
-Cette solution est globalement plus accessible que la solution VMWare, et demeure intéressante pour son client, qui lève toute les contraintes d'administration des postes locaux. 
+\paragraph{} La couverture fonctionnelle est assurée par d'autres logiciels, qui
+différent peu en terme de fonctionnalités.
+
+\paragraph{} Cette solution est globalement plus accessible que la solution
+VMWare, et demeure intéressante pour son client, qui lève toute les contraintes
+d'administration des postes locaux. 
 
 \section{État des lieux du SI du département IF}
 
-Le département informatique posséde actuellement quelques serveurs et environ 200 postes fixes, une cinquantaines de machines déportées de type blades.\\
-Du coté serveurs, il est clair que l'implantation d'un système de virtualisation nécessitera une augmentation conséquente du parc serveur.\\
-En revanche, il est intéressant de pouvoir exploiter les ressources locales des machines, vu la multitude de postes physiques présents sur site. Cela peut en revanche poser des soucis en termes d'administration, et de gestion du volume de données qui transite par le réseau.\\
-En termes de réseau, c'est probablement le point qui va probablement être le plus limitant pour notre solution. En effet, l'infrastructure passive actuellement déployée est relativement ancienne et les débits de données se retrouvent grandement limités. Ainsi, il n'est pas envisageable d'utiliser une solution en rapatriant des images de VM sur les machines locales, cela génèrerait un pic de charge que le réseau ne pourrait supporter.\\
+\paragraph{} Nous estimons actuellement que le département informatique possède
+une quinzaine de serveurs dédiés à la mise en place des postes de TP, 60 postes
+clients complets et 60 postes déportés à l'aide de boitiers KVM et de serveurs
+Blades , environ 15 postes déportés "Sun".
 
+\paragraph{} Du coté des serveurs, le déploiement d'un système de virtualisation
+nécessitera très probablement d'augmenter la puissance globale du parc de
+serveurs.
 
+\paragraph{} En revanche, il est intéressant de pouvoir exploiter les ressources
+locales des machines, vu la multitude de postes physiques présents sur site.
+Cela peut en revanche poser des soucis en termes d'administration, et de gestion
+du volume de données qui transite par le réseau.
+
+\paragraph{} L'infrastructure réseau actuelle supporte le trafic du déport de
+l'affichage de 60 postes, le partage en réseau des documents des utilisateurs
+pour environ 250 utilisateurs connectés simultanément et le trafic des
+utilitaires supports (intranet, emploi du temps, etc). Cependant, la
+distribution des images de machines virtuelles sur le réseau provoquerait un pic
+d'utilisation lors de la connexion des utilisateurs (qui sollicitent la
+plateforme au même moment lorsqu'ils arrivent en salle de TP). Il est donc
+impossible de faire naviguer les images de machines virtuelles sur le réseau.
