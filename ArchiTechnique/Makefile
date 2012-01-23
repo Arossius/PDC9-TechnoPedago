@@ -1,6 +1,6 @@
 TARGET=ArchiTech.pdf
 INCLUDES=Introduction.tex Objectifs.tex Logiciel.tex Materiel.tex
-ASSETS=
+ASSETS=archi_materiel.png
 TEXFILE=ArchiTech.tex
 CC=pdflatex -halt-on-error
 
