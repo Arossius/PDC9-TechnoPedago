@@ -1,7 +1,7 @@
-TARGET=Existant.pdf
-INCLUDES=Introduction.tex Analyse.tex
-ASSETS=
-TEXFILE=Existant.tex
+TARGET=ArchiTech.pdf
+INCLUDES=Introduction.tex Objectifs.tex Logiciel.tex Materiel.tex
+ASSETS=archi_materiel.png
+TEXFILE=ArchiTech.tex
 CC=pdflatex -halt-on-error
 
 all: $(TARGET)
