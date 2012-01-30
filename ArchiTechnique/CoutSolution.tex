@@ -1,42 +1,56 @@
 \section{Cout de la Solution}
 
+\paragraph{} Cette partie permet de résumer le budget nécessaire au déploiement de la solution de virtualisation que nous proposons. 
+
 \subsection{Serveurs}
 
-\begin{itemize}
-	\item outil client : 1
-	\item couplé avec ordonnancement
-	\item VMware View Connection + 1 an de support - 1748€
-\end{itemize}
 
-\subsection{Ordonnancement}
+\subsection{Ordonnancement et outils client}
+
+\paragraph{} L'ordonnanceur est, dans notre architecture, couplé avec les outils clients. Nous utilisons pour cela un serveur Dell PowerEdge R210 II permettant une gestion optimale de la répartition de charge sur les différents noeuds d'exécution et l'hébergement des outils client.
+\\~
 \begin{itemize}
 	\item powerEdge R210 II - 2099,00 €
 	\item VMware server + 1 an de support : 5859,25€
+	\item VMware View Connection + 1 an de support - 1748€
 \end{itemize}
 
 \subsection{noeuds d’exécution}
+
+\paragraph{} Ces composant composent le coeur de l'architecture. Nous avons choisi les serveurs Dell PowerEdge R710 équipés des nouveaux processeurs Intel Xeon X5670 dotés de 6 coeurs à 2.93GHz assurant une performance optimale d'exécution de machines virtuelles sur le réseau.
+\\~
 \begin{itemize}
  	\item Dell PowerEdge R710 + VMware Embedded 4.1 - 8812€ * 6 = 52872€
 \end{itemize}
 
 \subsection{stockage}
+
+\paragraph{} La gestion du stockage est ici abordée uniquement à titre indicatif : le plan de déploiement prévoit de réutiliser les serveurs déjà présents dans le département. Cette section donne un aperçu du prix d'un serveur disposant de l'espace nécessaire s'il fallait en racheter.
+\\~
 \begin{itemize}
- 	\item NX3100 - 7181€
+ 	\item Dell NX3100 - 7181€
 \end{itemize}
 
 \subsection{Client}
+
+\paragraph{} Notre politique est de réutiliser au maximum l'éxistant, ainsi les nombreux postes physiques du département seront simplement intégrés à la nouvelle architecture et aucun nouveau poste ne sera à acheter.
+\\~
 \begin{itemize}
 	\item 60 postes clients complets et 60 postes deportes a l'aide de boitiers
 	\item KVM et de serveurs Blades , environ 15 postes deportes "Sun".
 \end{itemize}
 
 \subsection{Formation}
+
+\paragraph{} Afin que les administrateurs du département soient en mesure de gérer et maintenir l'architecture, il sera nécessaire de leur fournir une formation complète sur les solutions VMware qu'ils seront amenés à utiliser.
+\\~
 \begin{itemize}
 	\item 1840 € + 5 * ( 150€ aller retour paris lyon + 5 * 30€ hotel ) = 3340€
 \end{itemize}
 
 
 \subsection{Total}
+
 \begin{itemize}
-	\item 69759,25€
+	\item 65.918,25€
 \end{itemize}
