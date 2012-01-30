@@ -1,0 +1,40 @@
+\section{Gestion du changement et réutilisation de l'existant}
+
+\subsection{Impact sur l'utilisateur final}
+
+La mise en place d’un système de V.M. implique nécessairement des changements qui impacteront les utilisateurs habituels des machines du département informatique.
+L’un des objectifs de ce projet, outre la mise en place du système de V.M., sera de s’atteler à minimiser le plus possible les changements qui affecteront, directement ou non, les utilisateurs. \\\\
+
+Dans un premier temps, nous nous attarderons sur les impacts sur le système une fois celui-ci définitivement mis en place. Lorsque l’utilisateur souhaite se connecter à une session, il lui suffit d’allumer l’une des machines actuellement présentes, s'authentifier via une page d’accueil simple, et de choisir enfin une V.M. existante. Une fois la V.M. démarrée, l’utilisateur ne verra pas de différence par rapport à la situation actuelle.\\
+Le fait de s'authentifier et de choisir une V.M. ne constitue pas une difficulté en soi, il n’y a donc pas de procédure mise en place spécifiquement pour aider l’utilisateur sur ce point. Nous verrons cependant par la suite qu’un système de T.P. sera mis en place, permettant à l’utilisateur de découvrir le système de V.M., ce T.P. sera donc l’occasion de faire découvrir ce nouveau système d’authentification à l’utilisateur.\\\\
+
+La principale difficulté réside dans la phase préparatoire précédant l’utilisation de la V.M., à savoir l’installation de V.M. En effet, pour pouvoir disposer de V.M., l’utilisateur devra les créer au préalable.\\
+C’est donc sur cela qu’il faudra s’attarder pour assister l’utilisateur dans le changement.
+Tout d’abord, il sera prévu un T.P. de 4 heures ayant pour but de présenter le nouveau système aux utilisateurs. Il leur permettra de faire leurs premiers pas avec le système, et notamment de créer leur machine première machine virtuelle.\\
+Afin de simplifier au plus la création de machines virtuelles, des images pré-configurées (Windows XP / Seven standards, Linux) seront mises à disposition des utilisateurs, qu’il leur suffira de copier pour pouvoir les utiliser. \\\\
+
+Enfin, afin de laisser à chaque utilisateur le temps de s’adapter au changement, un système de dual-boot sera mis en place pour une période de 2 à 3 mois. Pendant cette période, les utilisateurs auront la possibilité de démarrer une machine soit sur une session standard, soit sur le système d’authentification des machines virtuelles. Les utilisateurs auront donc le temps de s’habituer en douceur au nouveau système, et de récupérer leur données. Après un temps, le système de dual-boot sera abandonné au profit des machines virtuelles uniquement.
+
+\subsection{Plannification du changement}
+
+	Les modification apportées à l’infrastructure du réseau du département seront relativement importantes et devront peu à peu être appliquées à tous les postes clients. Un processus de déploiement doux sera pour cela mis en place afin de faciliter la mise en place de la nouvelle architecture. \\
+	Pour commencer, les travaux pourront en grande partie s’effectuer pendant des vacances scolaires ou les grandes vacances d’été où le nombre d’utilisateurs des postes du département sera limité. \\
+La première étape consistera à libérer de la place dans les locaux techniques des serveurs afin d’installer les nouveaux ESXi nécessaires à la mise en place de notre infrastructure virtuelle. Pour cela, il faudra désactiver un certain nombre de postes. Une première vague de serveurs de stockage sera alors effacée et, en utilisant la nouvelle infrastructure vmware, les administrateurs pourront créer les premières VM. \\
+Le but de cette étape sera de configurer le réseau mis en place, de connecter notre infrastructure de virtualisation au serveur d’authentification LDAP déjà présent afin de créer les comptes utilisateurs sur la plateforme. Durant toutes ces étapes, la majeure partie des équipements du département resteront disponibles. Les utilisateurs auront toujours accès à leurs sessions actuelles.\\
+	L’étape suivante sera le début de la migration des postes clients pour qu’ils puissent s’intégrer à la nouvelle infrastructure et commencer à l’exploiter. Pour les postes physiques, il sera possible d’installer un système de dual-boot permettant de faire le pont entre les deux technologies. Il sera alors possible de se connecter aux anciennes sessions jusqu’à la suppression des serveurs de données actuels. Les autres postes seront quant à eux remplacés en dernier sans phase de transition. \\
+Une fois les tests de fonctionnement effectués dans la première architecture minimale, il sera possible d’intégrer tous les ESXi et de migrer les données sur les nouvelles sessions de chaque utilisateur. Dans la nouvelle infrastructure, chaque utilisateur dispose d’un espace de stockage fixe qu’il est libre d’aménager à sa convenance. Lors de la création des comptes utilisateurs, les administrateurs leur fourniront une VM Windows et une Linux leur permettant de migrer leurs données de leurs deux session et de disposer des mêmes systèmes. \\
+
+\subsection{Formation des administrateurs}
+
+Afin de permettre aux administrateurs du système informatique du département d’assurer une installation et une administration correcte et efficace du nouveau système de machines virtuelles, des formations par des experts de l’équipe VMware seront ogranisées. Ces formations se dérouleront à Paris ; la formation durera 5 jours, et sera financé par le département ; le trajet et le séjour seront entièrement remboursés, à hauteur d’un plafond qu’il convient de fixer en fonction des tarifs en vigueur (le budget actuel prévoit 150€ pour un aller-retour Lyon / Paris et 30€ par nuit d’hôtel).
+
+\subsection{Réutilisation de l'existant}
+
+Dans un soucis de minimiser les coûts, et de simplifier au plus la mise en place du système de machines virtuelles au sein du département informatique, une politique de réutilisation de l'existant a été mise en place.\\
+Les principaux points mis en avant par cette politique sont les suivants :
+\begin{itemize}
+\item[Les serveurs de données] : Les serveurs de données disposent actuellement de suffisamment d'espace pour stocker les données personnelles des étudiants. C'est pourquoi il a été décidé de les conserver et de les utiliser pour stocker les images des machines virtuelles mises à disposition des étudiants. La réutilisation de ces serveurs permet d'éviter l'acquisition couteuse de nouveaux serveurs destinés au stockage de données.
+\item [Les postes clients] : Le département informatique dispose déjà de nombreuses machines, et il serait totalement impensable de se débarasser de la totalité du parc matériel mis à disposition au sein du département. Il a donc été décidé de conserver les machines déjà présentes afin d'éviter tout coût inutile. Ces machines seront à termes remplacées par de simple KVM reliées par le biais de KVM switchs aux machines virtuelles. Cependant, cette migration progressive vers un parc de KVM ne fera qu'en parallèle du remplacement normal des machines actuelles, dues à leur obsolescence. Cela ne génère donc pas de coût supplémentaires concernant le parc de machines clientes ; cela permettra même de réduire les coûts de remplacement du parc de machines actuels puisqu'une KVM coute (évidemment) bien moins cher qu'une machine standard.
+
+\end{itemize}
+
