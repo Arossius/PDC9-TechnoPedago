@@ -152,11 +152,61 @@ outre supporter des technologies de réplication de données pour garantir
 l'intégrité et la sécurité des données. Ces serveurs n'ont, en revanche, pas
 besoins de grosses capacités de calcul.
 
-\paragraph{} TODO
+\paragraph{} Les SAN \emph{Storage Area Network} constituent l'ensemble des
+serveurs dédiés au stockage dans une infrastructure réseau. Ces serveurs
+supportent des technologies dédiées au stockage à haute performance comme
+le protocole iSCSI (généralement géré par le système d'exploitation), qui permet de transit de messages du
+protocole SCSI sur le réseau.
+
+\paragraph{} Ces serveurs doivent, par ailleurs, garantir l'intégrité des
+données stockées grâce à des technologies RAID 1 supportées par le matériel et
+fournir d'excellentes performances en entrée/sortie entre les disques durs et le
+réseau via des interfaces 10 Gigabits.
+
+\paragraph{} La technologie RAID 1 permet de répliquer sur un)
+second disque dur l'intégralité des modifications en écritures effectuées
+sur le disque dur principal, on dispose ainsi d'un second disque copié à
+l'identique, et donc, l'intégrité des données est garantie en cas de
+défaillance de l'un des disques.
+
+\paragraph{} Ces serveurs doivent être équipés de ce type de matériel :
+
+\begin{description}
+  \item[Carte mère] Carte mère supportant au niveau du matériel
+    les technologies RAID 1, un socket processeur \emph{Intel Xeon}, 6 ports SATA
+    (qui peuvent être obtenus à l'aide de ponts SATA offrant des ports
+    supplémentaires).
+  \item[Processeur] Intel Xeon
+  \item[Mémoire vive] 6GB de mémoire DDR3 supportant la correction d'erreurs ECC
+  \item[Disques dur] Disques durs grande capacités supportant l'installation
+    \emph{à chaud} en SATA. On peut par exemple utiliser 6 disques dur SATA 2TB
+    pour offrir 6 TB de données (répliquées).
+\end{description}
 
 \subsection{Réseau}
 
+\paragraph{} Le réseau actuellement déployé à l'Insa est suffisament robuste
+pour gérer le trafic de données entre les serveurs et les postes clients.
+Cependant, il est nécessaire de mettre en place des équipements très haut débit
+entre les serveurs de stockage et les serveurs d'exécution.
+
+\paragraph{} Selon le nombre de serveurs déployés, il sera nécessaire de
+déployer des switchs de niveau 3 disposant d'interfaces 10GB. Un switch de 16
+interfaces devrait être largement suffisant.
+
+
 \paragraph{Support}
+
+\paragraph{} Le matériel de support comprend :
+
+\begin{itemize}
+  \item les armoires pour serveurs
+  \item les onduleurs et alimentations de secours
+  \item la climatisation pour la salle serveurs
+  \item les rails et supports pour les câbles (notamment Ethernet).
+\end{itemize}
+
+\paragraph{} L'étude de ce type de matériel sort du cadre de notre étude.
 
 \subsection{Postes clients}
 
